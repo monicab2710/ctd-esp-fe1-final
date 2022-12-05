@@ -1,16 +1,16 @@
-import { Action, ActionCreator } from "@reduxjs/toolkit"
-
+import { Action, ActionCreator, ThunkAction } from "@reduxjs/toolkit"
+import Character from "../../types/character.types"
+import { IRootState } from "../store"
 
 export interface FetchCharactersAction extends Action {
-
     type: 'FETCH-CHARACTER',
-    name: name
+    name: string,
 }
 
 export interface FetchCharactersSuccessAction extends Action {
 
     type: 'FETCH-CHARACTER-SUCCESS',
-    character: character
+    character: Character[]
 }
 
 export interface FetchCharactersErrorAction extends Action {
@@ -19,7 +19,7 @@ export interface FetchCharactersErrorAction extends Action {
     message: string
 }
 
-export const fetchCharactersAction: ActionCreator<FetchCharactersAction> = (name:name) => {
+export const fetchCharactersAction: ActionCreator<FetchCharactersAction> = (name: string) => {
     return {
         type:
             'FETCH-CHARACTER',
@@ -27,44 +27,39 @@ export const fetchCharactersAction: ActionCreator<FetchCharactersAction> = (name
     }
 }
 
-export const fetchCharactersSuccessAction: ActionCreator<FetchCharactersSuccessAction> = (character: character) => {
+export const fetchCharactersSuccessAction: ActionCreator<FetchCharactersSuccessAction> = (character: Character[]) => {
     return {
         type: 'FETCH-CHARACTER-SUCCESS',
         character: character
     }
 }
 
-export const fetchCharactersErrorAction: ActionCreator<FetchCharactersErrorAction> = ( message: message) => {
+export const fetchCharactersErrorAction: ActionCreator<FetchCharactersErrorAction> = (message: string) => {
     return {
-        type: 'FETCH-CHARACTER-SUCCESS',
+        type: 'FETCH-CHARACTER-ERROR',
         message: message
     }
-
-
 }
 
 export type CharactersAction =
-    ReturnType<typeof fetchCharactersAction>
-    ReturnType<typeof fetchCharactersSuccessAction>
-    ReturnType<typeof fetchCharactersErrorAction>
+    | ReturnType<typeof fetchCharactersAction>
+    | ReturnType<typeof fetchCharactersSuccessAction>
+    | ReturnType<typeof fetchCharactersErrorAction>
 
+export interface FetchCharactersThunk extends ThunkAction<void, IRootState, unknown, CharactersAction> { }
 
-
-
-
-
-
-
-
-export const getCharacter = (name: String): any => {
-    return (dispatch: any) => {
-        dispatch(fetchCharacter())
-        axios.get(`https://rickandmortyapi.com/api/character/${name}`)
-            .then(res => {
-                dispatch(fetchCharacterSuccess(res.data))
-            })
-            .catch(error => {
-                dispatch(fetchCharacterError(error))
-            })
+export const fetchCharactersThunk = (name: string): FetchCharactersThunk => {
+    return async (dispatch, getState) => {
+        dispatch(fetchCharactersAction(name))
+        try {
+            const response = await fetchCharactersActionAPI(name)
+            dispatch(fetchCharactersSuccessAction(response))
+        } catch (error) {
+            dispatch(fetchCharactersErrorAction(error))
+        }
     }
+
 }
+
+
+
