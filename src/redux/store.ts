@@ -1,13 +1,20 @@
-import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
-import { notasReducer } from './reducers/notasReducer'
-import thunk from 'redux-thunk'
-import { rickandMortyReducer } from './reducers/rickandMortyReducer'
+import {combineReducers} from "@reduxjs/toolkit";
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { createStore, applyMiddleware } from 'redux';
+import {TypedUseSelectorHook, useSelector as useReduxSelector} from "react-redux";
+import thunk from "redux-thunk";
 
-const rootReducers = combineReducers({
-    notitas: notasReducer,
-    pokemon: rickandMortyReducer
-})
 
-const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-export const store = createStore(rootReducers, composeEnhancers(applyMiddleware(thunk)))
+const rootReducer = combineReducers({
+   
+});
+
+export type IRootState = ReturnType<typeof rootReducer>;
+export const useSelector: TypedUseSelectorHook<IRootState> = useReduxSelector
+
+
+
+export const store = createStore(
+    rootReducer, composeWithDevTools(applyMiddleware(thunk))
+)
