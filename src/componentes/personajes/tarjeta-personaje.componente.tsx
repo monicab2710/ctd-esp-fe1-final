@@ -6,16 +6,14 @@ import BotonFavorito from '../botones/boton-favorito.componente';
 
 
 type Props = {
-  character: any;
-  itsFavorite: any;
+  character: Character;
+  itsFavorite: boolean;
 };
 
 /**
  * tarjeta para cada personaje 
  * @returns a JSX.Element
  */
-
-
 
 const TarjetaPersonaje = ({ character, itsFavorite }: Props) => {
   const { favourites } = useAppSelector((state) => state.characters);

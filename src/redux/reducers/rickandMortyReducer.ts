@@ -1,5 +1,5 @@
 import { Reducer } from "@reduxjs/toolkit"
-import Character from "../../types/character.types";
+import {Character} from "../../types/character.types";
 import { CharactersAction } from "../actions/rickAndMortyActions";
 
 export interface CharactersState {

@@ -20,7 +20,7 @@ const BotonFavorito = ({ itsFavorite, character }) => {
       dispatch(charactersSelection.actions.addFav(character));
     }
   }
-};
+
 return (
   <div className="button-favorite">
     <img
@@ -30,5 +30,5 @@ return (
     />
   </div>
 );
-
+};
 export default BotonFavorito;

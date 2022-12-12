@@ -2,7 +2,7 @@ import "./Detalle.css";
 import BotonFavorito from "../componentes/botones/boton-favorito.componente";
 import TarjetaEpisodio from "../componentes/episodios/tarjeta-episodio.componente";
 import { useLocation } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../hooks";
+import { useAppSelector, useAppDispatch } from "../Hooks/thunk";
 import { useEffect } from "react";
 import { loadEpisodes, charactersSelection } from "../Selection/Selection"
 

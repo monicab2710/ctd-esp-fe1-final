@@ -1,5 +1,5 @@
 import "./paginacion.css";
-import { useAppSelector, useAppDispatch } from "../../Hooks";
+import { useAppSelector, useAppDispatch } from "../../Hooks/thunk";
 import { charactersSelection } from "../../Selection/Selection";
 /**
  * @returns un JSX element

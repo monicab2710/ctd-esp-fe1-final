@@ -1,5 +1,5 @@
 import './tarjeta-episodio.css';
-import { useAppSelector } from '../../Hooks'
+import { useAppSelector } from '../../Hooks/thunk'
 /**
  * @returns un JSX element 
  */
