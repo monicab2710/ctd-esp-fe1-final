@@ -1,7 +1,7 @@
 import { Action, ActionCreator, ThunkAction } from "@reduxjs/toolkit"
 import { fetchCharactersActionAPI } from "../../services/character.services"
-import Character from "../../types/character.types"
-import { IRootState } from "../store"
+import {Character} from "../../types/character.types"
+import { RootState } from "../store"
 
 export interface FetchCharactersAction extends Action {
     type: 'FETCH-CHARACTER',
@@ -20,7 +20,7 @@ export interface FetchCharactersErrorAction extends Action {
     error: string
 }
 
-export interface BuscarPersonajesThunkAction extends ThunkAction<void, IRootState, unknown, FetchCharactersAction | FetchCharactersSuccessAction | FetchCharactersErrorAction>{}
+export interface BuscarPersonajesThunkAction extends ThunkAction<void, RootState, unknown, FetchCharactersAction | FetchCharactersSuccessAction | FetchCharactersErrorAction>{}
 
 
 export const fetchCharactersAction: ActionCreator<FetchCharactersAction> = (search: string) => {

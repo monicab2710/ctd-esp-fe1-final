@@ -1,6 +1,6 @@
 import "./filtros.css";
-import { useAppDispatch, useAppSelector } from "../../Hooks";
-import {charactersSelection} from "../../CharacterSelection";
+import { useAppDispatch, useAppSelector } from "../../Hooks/thunk";
+import {charactersSelection} from "../../Selection/Selection";
 
 
 const Filtros =() => {
