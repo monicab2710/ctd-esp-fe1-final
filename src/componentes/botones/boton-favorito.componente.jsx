@@ -1,18 +1,34 @@
-import './boton-favorito.css';
+import "./boton-favorito.css"; 
+import { charactersSelection } from "../../Selection/Selection";
+import { useState } from "react";
+import { useAppDispatch } from "../../Hooks/thunk";
+
 /**
  * Boton que indica si un elemento es favorito o no, y da la posibilidad de marcarlo/desmarcarlo
- * 
- * Deberás tipar las propiedades si usas este componente
- * 
- * 
  * @returns un JSX element 
  */
-const BotonFavorito = ({esFavorito, onClick}) => {
-    const src = esFavorito ? "/imagenes/star-filled.png" : "/imagenes/star.png"
+const BotonFavorito = ({ itsFavorite, character }) => {
+  const [favorite, setFavorite] = useState(itsFavorite);
+  const dispatch = useAppDispatch();
 
-    return <div className="boton-favorito">
-        <img src={src} alt={"favorito"} />
-    </div>
-}
+  function handleChange() {
+    if (favorite) {
+      setFavorite(false);
+      dispatch(charactersSelection.actions.deleteFav(character));
+    } else {
+      setFavorite(true);
+      dispatch(charactersSelection.actions.addFav(character));
+    }
+  }
+};
+return (
+  <div className="button-favorite">
+    <img
+      src={favorite ? "/imagenes/star-filled.png" : "/imagenes/star.png"}
+      alt={"favorite"}
+      onClick={() => handleChange()}
+    />
+  </div>
+);
 
 export default BotonFavorito;

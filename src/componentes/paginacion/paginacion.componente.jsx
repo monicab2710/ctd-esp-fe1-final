@@ -1,19 +1,39 @@
 import './paginacion.css';
-
+import { useAppSelector, useAppDispatch } from '../../Hooks'
+import {charactersSelection} from '../../Selection/Selection'
 /**
- * Componente que contiene los botones para paginar
- * 
- * Deberás agregar las propiedades necesarias para que funcione correctamente
- * 
- * 
  * @returns un JSX element 
  */
-const Paginacion = () => {
+const Paginacion =  () => {
+    const dispatch = useAppDispatch();
 
-    return <div className="paginacion">
-        <button disabled={true} className={"primary"}>Anterior</button>
-        <button disabled={false} className={"primary"}>Siguiente</button>
-    </div>
-}
+    const { characters } = useAppSelector((state) => state.characters);
+    function nextPage() {
+        dispatch(charactersSelection.actions.nextPage());
+    }
+
+    function prevPage() {
+        dispatch(charactersSelection.actions.prevPage());
+    }
+
+    return (
+        <div className="pagination">
+            <button
+                disabled={characters.info?.prev == null ? true : false}
+                className={"primary"}
+                onClick={prevPage}
+            >
+                Previous
+            </button>
+            <button
+                disabled={characters.info?.next == null ? true : false}
+                className={"primary"}
+                onClick={nextPage}
+            >
+                Next
+            </button>
+        </div>
+    );
+};
 
 export default Paginacion;

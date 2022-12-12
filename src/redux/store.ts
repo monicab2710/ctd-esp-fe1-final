@@ -1,20 +1,18 @@
-import {combineReducers} from "@reduxjs/toolkit";
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { createStore, applyMiddleware } from 'redux';
-import {TypedUseSelectorHook, useSelector as useReduxSelector} from "react-redux";
-import rickandMortyReducer from "../redux/reducers/rickandMortyReducer"
-import thunk from "redux-thunk";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { charactersSelection } from "../Selection/Selection";
 
 
 
 const rootReducer = combineReducers({
-   Characters:rickandMortyReducer,
-});
-
-export type IRootState = ReturnType<typeof rootReducer>;
-export const useSelector: TypedUseSelectorHook<IRootState> = useReduxSelector
-
-
-export const store = createStore(
-    rootReducer, composeWithDevTools(applyMiddleware(thunk))
-)
+    characters: charactersSelection.reducer,
+  });
+  
+  const store = configureStore({
+    reducer: rootReducer,
+    devTools: process.env.NODE_ENV !== "production",
+  });
+  
+  export default store;
+  
+  export type RootState = ReturnType<typeof store.getState>;
+  export type AppDispatch = typeof store.dispatch;

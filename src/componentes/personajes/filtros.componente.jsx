@@ -1,23 +1,34 @@
 import "./filtros.css";
-import React , {FC} from "react";
-import { useDispatch } from "<react-redux";
-import {fetchCharactersThunk} from "rickAndMortyActions"
+import { useAppDispatch, useAppSelector } from "../../Hooks";
+import {charactersSelection} from "../../CharacterSelection";
 
 
-const Filtros:FC = () => {
-  const dispatch = useDispatch();
+const Filtros =() => {
+  const dispatch = useAppDispatch();
+  const { filter } = useAppSelector((state) => state.characters);
 
   return (
-    <div className="filtros">
-      <label for="nombre">Filtrar por nombre:</label>
-      <input
-        type="text"
-        onChange={(e) => dispatch(fetchCharactersThunk(e.target.value))}
-        placeholder="Rick, Morty, Beth, Alien, ...etc"
-        name="nombre"
-        autoFocus={true}
-      />
-    </div>
+      <div className="filters">
+          <label htmlFor="name">Filtrar por nombre:</label>
+          <div>
+              <input
+                  type="text"
+                  placeholder="Rick, Morty, Beth, Alien, ...etc"
+                  name="name"
+                  value={filter}
+                  onChange={(e) => {
+                      dispatch(charactersSelection.actions.filter(e.target.value));
+                      dispatch(charactersSelection.actions.resetPage());
+                  }}
+              />
+              <button onClick={() => {
+                  dispatch(charactersSelection.actions.resetfilter());
+                  dispatch(charactersSelection.actions.resetPage());
+              }}>
+                  Clean Filters
+              </button>
+          </div>
+      </div>
   );
 };
 
